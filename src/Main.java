@@ -12,38 +12,42 @@ public class Main {
         int Int = 0;
         String ys = "y";
         while(ys.equals("y")){
-            System.out.println("Please enter name for player "+Int+" :");
+            System.out.println("Please enter name for player "+(1+Int)+" :");
             String name = scanner.nextLine();
             players.add(new Player(250, name));
 
-            System.out.println("Will you add another one player ? (y/n)");
-            ys = scanner.nextLine();
+            do{
+                System.out.println("Will you add another one player ? (y/n)");
+                ys = scanner.nextLine();
+            }
+            while(!(ys.equals("y") || ys.equals("n")));
             Int++;
         }
 
 
 
         while(toContinue(players)){
-            for(int i = 0; i < players.size() ; i++){
-                System.out.println("It's player "+players.get(i).getPseudo()+" turn. Will you hit (hit) sb or being hill (hill) ? (hit/hill)");
-                ys = scanner.nextLine();
+            for(Player player : players){
+                System.out.println("It's player "+player.getPseudo()+" turn. You have now "+ player.getPv()+" pv.");
+                do{
+                    System.out.println("Will you hit (hit) sb or being hill (hill) ? (hit/hill)");
+                    ys = scanner.nextLine();
+                }
+                while(!(ys.equals("hit") || ys.equals("hill")));
 
                 if(ys.equals("hit")) {
                     System.out.println("Please enter the number of player you want to hit : (<" + players.size() + ")");
                     int id = scanner.nextInt();
-                    Player player = players.get(id);
-                    player.beSlugged();
-                    System.out.println("Player " +players.get(id).getPseudo() + "has been slugged and has now " + player.getPv() + " pv !");
-                    players.set(id, player);
+                    int pv = players.get(id).getPv();
+                    players.get(id).beSlugged();
+                    System.out.println("Player " +players.get(id).getPseudo() + " has been slugged !");
+                    System.out.println("Player " +players.get(id).getPseudo() + " has now !"+ players.get(id).getPv() + " pv ! (-"+(pv-players.get(id).getPv())+")");
+                    players.set(id,  players.get(id));
                 }
                 if(ys.equals("hill")){
-
-                    Player player = players.get(i);
                     player.heal();
-                    System.out.println("You have been healded and have now "+player.getPv()+" pv !");
-
+                    System.out.println("You have been healed and have now "+player.getPv()+" pv !");
                 }
-
             }
         }
 

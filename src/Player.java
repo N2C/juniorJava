@@ -1,13 +1,19 @@
+import java.util.Random;
+
 /**
  * Created by nicol_000 on 02/03/2017.
  */
+
+
 public class Player {
     private int pv;
     private String pseudo;
+    private Random random;
 
     public Player(int pv, String pseudo){
         this.pseudo = pseudo;
         this.pv = pv;
+        this.random = new Random();
     }
 
     public int getPv() {
@@ -29,12 +35,13 @@ public class Player {
     }
 
     public Player heal(){
-        this.pv += 20;
+        this.pv += this.random.nextInt(50);
         return this;
     }
 
     public Player beSlugged(){
-        this.pv += -20;
+        int r = this.random.nextInt(10);
+        this.pv -= (r==5) ? 100 : this.random.nextInt(50);
         return this;
     }
 
